@@ -20,3 +20,13 @@ build cancelling or even editing of appointments but this is not required)
 - [ ] React bootstrap?
 - [ ] cron stuff or celery?
 - [ ] google maps
+- [ ] react router
+
+[Wireframe](https://app.diagrams.net/#G11_ArtqXd2kOpWHkrYYLR73FOOt701drv)
+
+
+
+<!-- 
+Co-authored-by: Anjelica Silva <anjelicacsilva@gmail.com>
+Co-authored-by: Katrina Huber-Juma <katrina.huber@gmail.com>"
+--> 
