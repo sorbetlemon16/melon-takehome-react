@@ -4,7 +4,7 @@ function App() {
     return(
         <React.Fragment>
             <h1>Hi!</h1>
-            <h1>Bye</h1>
+            <AvailableReservations />
         </React.Fragment>
     )
 }
