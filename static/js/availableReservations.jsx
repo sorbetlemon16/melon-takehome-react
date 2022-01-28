@@ -1,5 +1,33 @@
 "use strict";
 
+function Modal() {
+
+    // this doesn't do anything yet and I'm not even sure it's the approach we want to take
+    const savedReservations = () => {
+        window.location('/existing_reservations');
+    }
+
+    return (
+        <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className="modal-dialog">
+                <div className="modal-content">
+                <div className="modal-header">
+                    <h5 className="modal-title" id="exampleModalLabel">Confirmation</h5>
+                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div className="modal-body">
+                    Your reservation has been created! 
+                </div>
+                <div className="modal-footer">
+                    <button type="button" data-bs-dismiss="modal">Make another reservation.</button>
+                    <button type="button" onClick={savedReservations}>Go to your reservation page.</button>
+                </div>
+                </div>
+            </div>
+            </div>
+    )
+}
+
 function AvailableReservations() {
 
     const earliest = new Date().toISOString().substring(0,16);
@@ -22,9 +50,13 @@ function AvailableReservations() {
                 setAvailableTimes(response);
             })
         }
-    
 
-            // they each need a unique key, needs to be a single element
+    const makeReservation = () => {
+        // fetch request
+
+        // reset available times
+        setAvailableTimes([]);
+    }
 
     return (
         <React.Fragment>
@@ -34,8 +66,9 @@ function AvailableReservations() {
                 <input type="submit" />
             </form>
             {availableTimes.map((time, index) => {
-                return (<div key='{index}'>{index} {time}</div>)
+                return (<button key={index} onClick={makeReservation} data-bs-toggle="modal" data-bs-target="#exampleModal">{time}</button>)
             })}
+            <Modal />
         </React.Fragment>
     )
 }

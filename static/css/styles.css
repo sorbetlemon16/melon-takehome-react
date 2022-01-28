@@ -1,4 +1,4 @@
-input[type="submit"] {
+button {
     color: white;
     background-color: rgb(0, 60, 68);
     border: 0;
@@ -6,9 +6,10 @@ input[type="submit"] {
     border-radius: 3px;
     padding: 5px;
     font-family: 'Varela Round', sans-serif;
+    display: block;
 }
 
-input[type="submit"]:hover {
+button:hover {
     color: black;
     background-color: rgb(255, 255, 255, 0.4);
 }
