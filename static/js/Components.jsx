@@ -65,16 +65,21 @@ function ExistingReservations(props) {
 }
 
 function LogIn(props) {
-    const updateUsername = (evt) => {
+   
+    const history = ReactRouterDOM.useHistory();
+
+    const login = (evt) => {
         evt.preventDefault();
 
         props.setUsername(document.querySelector('#username').value);
+
+        history.push("/schedule");
    }
 
     return (
         <React.Fragment>
             <h1> Login </h1>
-            <form onSubmit={updateUsername}>
+            <form onSubmit={login}>
                 Username: <input id="username" type="text" />
                 <input type="submit"/>
                 
@@ -91,12 +96,15 @@ function Navbar(props) {
           <span>Existing Reservations</span>
         </ReactRouterDOM.Link>
   
-        <ReactRouterDOM.NavLink to="/">
+        <ReactRouterDOM.NavLink to="/schedule">
             Make a Reservation
-          </ReactRouterDOM.NavLink>
-          <a onClick={() => props.setUsername(null)}>
+        </ReactRouterDOM.NavLink>
+        <ReactRouterDOM.NavLink  
+            to="/"
+            onClick={() => props.setUsername(null)}
+        >
             Logout
-          </a>
+        </ReactRouterDOM.NavLink>
       </div>
     )
 }

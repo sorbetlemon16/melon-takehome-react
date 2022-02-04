@@ -55,7 +55,11 @@ def delete_reservation(username):
     )
     db.session.delete(reservation_to_delete)
     db.session.commit()
-    return "Success"
+
+    # Return remaining reservations to show on page
+    reservations_remaining = Reservation.query.filter_by(username=username)
+
+    return jsonify([res.to_dict() for res in reservations_remaining])
 
 if __name__ == '__main__':
     

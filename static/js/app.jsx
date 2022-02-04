@@ -5,20 +5,8 @@ function App() {
     const [ username, setUsername ] = React.useState(null);
     const history = ReactRouterDOM.useHistory();
 
-    React.useEffect(() => {
-        // If username is not defined, send to them to the login page /
-        //  display login component. Do this the first time the component is 
-        // mounted and every time username changes.
-        if (!username) {
-          history.push('/login');
-        }
-        else {
-            history.push('/');
-        }
-      }, [username]);
-
-    // Retrieve existing reservations and display them on first load, as
-    // well as any time username updates. the
+    // Retrieve existing reservations and display them when component is 
+    // mounted, on first load, as well as any time username updates.
     React.useEffect(() => {
         fetch(`/api/retrieve_reservations/${username}`)
             .then(response => response.json())
@@ -27,7 +15,7 @@ function App() {
     }, [username])
 
     function makeReservation (time) {
-        // send a fetch request to the server to add reservation
+        // send a POST request to the server to add reservation
         fetch(`/api/make_reservation/${username}`, 
         {
             method: 'POST',
@@ -45,14 +33,14 @@ function App() {
         // Update existingReservations state 
         setExistingReservations(existingReservations => [... existingReservations, time]);
 
-        // Go to /existing_reservations page and render ExistingReservations
+        // Go to /existing_reservations and render ExistingReservations
         // component 
         history.push('/existing_reservations');
     }
 
     function cancelReservation(time) {
 
-        // send a fetch request to the server to add reservation
+        // send a POST request to the server to cancel reservation
         fetch(`/api/delete_reservation/${username}`, 
         {
             method: 'POST',
@@ -61,42 +49,30 @@ function App() {
                 'Content-Type': 'application/json',
             },
         })
-        .then(res => {
-            if (!res.ok) {
-                alert('Attempt to delete reservation failed. Please try again');
-            }
-        })
+        .then(response => response.json())
+        .then(response => setExistingReservations(response));    }
 
-        // Update existingReservations state 
-        const updatedReservations = [...existingReservations];
-
-        // Is there an easier way to do this? I could also have the fetch request
-        // return the updated reservations but it seems inefficient
-        console.log(time);
-        console.log(updatedReservations);
-        const index = updatedReservations.indexOf(time);
-        updatedReservations.splice(index, 1);
-        setExistingReservations(updatedReservations);
-
-    }
+    // Only show navbar if user is logged in
+    const navbar = username ? <Navbar setUsername={setUsername}/> : ""
 
     return (
-          <div className="container-fluid">
-            <ReactRouterDOM.Route exact path="/login">
-              <LogIn setUsername={setUsername} />
-            </ReactRouterDOM.Route>
-            <ReactRouterDOM.Route exact path="/">
-                <Navbar setUsername={setUsername} /> 
-              <AvailableReservations makeReservation={makeReservation} username={username} />
-            </ReactRouterDOM.Route>
-            <ReactRouterDOM.Route exact path="/existing_reservations">
-                <Navbar setUsername={setUsername} /> 
-                <ExistingReservations 
-                    existingReservations={existingReservations} 
-                    cancelReservation={cancelReservation} 
-                />
-            </ReactRouterDOM.Route>
-          </div>
+        <React.Fragment>
+            {navbar}
+            <div className="container-fluid">
+                <ReactRouterDOM.Route exact path="/">
+                    <LogIn setUsername={setUsername} />
+                </ReactRouterDOM.Route>
+                <ReactRouterDOM.Route exact path="/schedule">
+                    <AvailableReservations makeReservation={makeReservation} username={username} />
+                </ReactRouterDOM.Route>
+                <ReactRouterDOM.Route exact path="/existing_reservations">
+                    <ExistingReservations 
+                        existingReservations={existingReservations} 
+                        cancelReservation={cancelReservation} 
+                    />
+                </ReactRouterDOM.Route>
+            </div>
+          </React.Fragment>
       );
 }
 
