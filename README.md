@@ -1,32 +1,30 @@
-## Requirements
+## Installation
+To run Melon Reservation Schedule on your local machine, follow the instructions below (note: these instructions assume you have Postgres installed and running):
 
-- [ ] all reservations must start and end on the hour or half hour
-- [ ] all reservations are exactly 30 minutes long
-- [ ] a user can only have 1 reservation on a calendar date (#tooMuchMelon)
+Clone this repo: https://github.com/sorbetlemon16/melon_takehome.git
 
+Create and activate a virtual environment inside your project directory:
 
+```
+virtualenv env (Mac OS)
+virtualenv env --always-copy (Windows OS)
+source env/bin/activate
+```
 
-## Your application frontend should have the following pages:
-- [ ] Simple login screen (no authentication needed; more on this in the details section)
-- [ ] Page to search for appointments (see following page for an example of this)
-- [ ] Results page to view the results of the appointment search (allowing users to book any of those appointments and showing them an error if none are found)
-- [ ] Page to view all the scheduled appointments for the current user (you can optionally
-build cancelling or even editing of appointments but this is not required)
+Install the dependencies:
+```pip3 install -r requirements.txt```
 
-## Practice goals
-- [ ] Material UI
-- [ ] flask login (WT FORMs, decorators)
-- [ ] testing
-- [ ] React bootstrap?
-- [ ] cron stuff or celery?
-- [ ] google maps
-- [ ] react router
+Create a secrets.sh file to assign a value to APP_SECRET_KEY and run it:
+```source secrets.sh```
 
-[Wireframe](https://app.diagrams.net/#G11_ArtqXd2kOpWHkrYYLR73FOOt701drv)
+Create the database: 
+```createdb melon_reservations```. 
 
+Create the tables by running model.py interactively:
+```python3 -i model.py```. 
+```>>> db.create_all()```. 
 
+Run the app:
+```python3 server.py```
 
-<!-- 
-Co-authored-by: Anjelica Silva <anjelicacsilva@gmail.com>
-Co-authored-by: Katrina Huber-Juma <katrina.huber@gmail.com>"
---> 
+You can now navigate to 'localhost:5000/' to access Melon Tasting Scheduler.

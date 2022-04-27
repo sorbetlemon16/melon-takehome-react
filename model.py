@@ -23,9 +23,9 @@ class Reservation(db.Model):
 
     @classmethod
     def find_reservation_by_start_and_user(cls, reservation_start, username):
-        reservation = Reservation.query\
-            .filter(Reservation.start_time==reservation_start)\
-            .filter(Reservation.username==username)\
+        reservation = cls.query\
+            .filter(cls.start_time==reservation_start)\
+            .filter(cls.username==username)\
             .first()
         return reservation
 
@@ -42,8 +42,8 @@ class Reservation(db.Model):
     def available_reservations(cls, start_time, end_time, username):
         # Retrieve reservations within the specified time range 
         all_reservations_in_range = (
-            db.session.query(Reservation.start_time)\
-            .filter(Reservation.start_time.between(start_time, end_time))\
+            db.session.query(cls.start_time)\
+            .filter(cls.start_time.between(start_time, end_time))\
         )
         # Get reservation times without time zone
         existing_reservation_times = \
@@ -54,8 +54,8 @@ class Reservation(db.Model):
         #  the user made that day at a later time outside the end time. To prevent users from 
         # booking multiple reservations on the same day, I get all current user reservations 
         # and check that any other available reservations are not on that day. 
-        user_reservations = db.session.query(Reservation.start_time)\
-            .filter(Reservation.username==username)\
+        user_reservations = db.session.query(cls.start_time)\
+            .filter(cls.username==username)\
             .all()
 
         # get the list of dates the user has a reservation on

@@ -12,12 +12,6 @@ def index():
 
     return render_template('base.html')
 
-# @app.route('/existing_reservations')
-# def existing_reservations():
-#     """Show homepage"""
-
-#     return render_template('base.html')
-
 @app.route("/api/get_available_reservations/<username>", methods=["GET"])
 def get_available_reservations(username):
     start_time = parse(request.args.get("startTime"))
