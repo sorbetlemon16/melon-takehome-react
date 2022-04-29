@@ -49,12 +49,15 @@ function ExistingReservations(props) {
             <h1> Reservations </h1>
             {props.existingReservations.map((time) => {
                 return (
-                <form key={time} onSubmit={
-                    (evt) => {
-                        evt.preventDefault();
-                        props.cancelReservation(time);
+                <form 
+                    key={time} 
+                    onSubmit={
+                        (evt) => {
+                            evt.preventDefault();
+                            props.cancelReservation(time);
+                            }
                     }
-                    }>
+                >
                     {time}
                     <input type="submit" value="Cancel reservation" />
                 </form>)
@@ -92,9 +95,9 @@ function Navbar(props) {
 
     return (
         <div className="link_header">
-        <ReactRouterDOM.Link to="/existing_reservations">
-          <span>Existing Reservations</span>
-        </ReactRouterDOM.Link>
+        <ReactRouterDOM.NavLink to="/existing_reservations">
+          Existing Reservations
+        </ReactRouterDOM.NavLink>
   
         <ReactRouterDOM.NavLink to="/schedule">
             Make a Reservation
